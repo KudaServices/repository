@@ -85,4 +85,10 @@ Add-MavenArtifact `
     -Version "21.03.26-b67f782-1287-22.3.10" `
     -JarFile ".\provided\FastAsyncWorldEdit-1.8.8-21.03.26.jar"
 
+Add-MavenArtifact `
+    -GroupId "rip.kuda" `
+    -ArtifactId "HeatherAPI" `
+    -Version "1.0" `
+    -JarFile ".\provided\HeatherAPI-1.0-SNAPSHOT.jar"
+
 Write-Host "Repository was updated successfully."
