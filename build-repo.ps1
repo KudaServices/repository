@@ -97,4 +97,10 @@ Add-MavenArtifact `
     -Version "1.0.1" `
     -JarFile ".\provided\HeatherAPI-1.0.1.jar"
 
+Add-MavenArtifact `
+    -GroupId "LibsDisguises" `
+    -ArtifactId "LibsDisguises" `
+    -Version "8.6.8" `
+    -JarFile ".\provided\LibsDisguises.jar"
+
 Write-Host "Repository was updated successfully."
