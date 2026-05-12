@@ -100,7 +100,7 @@ Add-MavenArtifact `
 Add-MavenArtifact `
     -GroupId "LibsDisguises" `
     -ArtifactId "LibsDisguises" `
-    -Version "8.6.8" `
+    -Version "8.6.9" `
     -JarFile ".\provided\LibsDisguises.jar"
 
 Write-Host "Repository was updated successfully."
