@@ -102,5 +102,11 @@ Add-MavenArtifact `
     -ArtifactId "LibsDisguises" `
     -Version "8.6.9" `
     -JarFile ".\provided\LibsDisguises.jar"
+	
+Add-MavenArtifact `
+    -GroupId "protocolsupport" `
+    -ArtifactId "ProtocolSupport" `
+    -Version "4.23" `
+    -JarFile ".\provided\ProtocolSupport-1.8.jar"
 
 Write-Host "Repository was updated successfully."
