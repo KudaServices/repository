@@ -98,6 +98,12 @@ Add-MavenArtifact `
     -JarFile ".\provided\HeatherAPI-1.0.1.jar"
 
 Add-MavenArtifact `
+    -GroupId "rip.kuda.heather" `
+    -ArtifactId "HeatherAPI" `
+    -Version "1.0.2" `
+    -JarFile ".\provided\HeatherAPI-1.0.2.jar"
+
+Add-MavenArtifact `
     -GroupId "LibsDisguises" `
     -ArtifactId "LibsDisguises" `
     -Version "8.6.9" `
