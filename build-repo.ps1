@@ -58,6 +58,12 @@ Add-MavenArtifact `
 Add-MavenArtifact `
     -GroupId "org.bukkit" `
     -ArtifactId "craftbukkit" `
+    -Version "1.7.10-R0.1" `
+    -JarFile ".\provided\craftbukkit-1.7.10-R0.1.jar"
+
+Add-MavenArtifact `
+    -GroupId "org.bukkit" `
+    -ArtifactId "craftbukkit" `
     -Version "1.8.8" `
     -JarFile ".\provided\CraftBukkit-1.8.8.jar"
 
