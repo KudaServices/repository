@@ -1,0 +1,80 @@
+name: Build Maven repository
+
+on:
+  push: {}
+  pull_request: {}
+  workflow_dispatch: {}
+
+jobs:
+  build-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate Maven repository
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          add_maven_artifact() {
+            local group_id="$1"
+            local artifact_id="$2"
+            local version="$3"
+            local jar_file="$4"
+
+            if [[ ! -f "$jar_file" ]]; then
+              echo "Jar not found: $jar_file" >&2
+              exit 1
+            fi
+
+            local group_path="${group_id//./\/}"
+            local artifact_path="${group_path}/${artifact_id}/${version}"
+            mkdir -p "$artifact_path"
+
+            cp "$jar_file" "${artifact_path}/${artifact_id}-${version}.jar"
+
+            cat > "${artifact_path}/${artifact_id}-${version}.pom" <<EOF
+          <project xmlns="http://maven.apache.org/POM/4.0.0"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+              <modelVersion>4.0.0</modelVersion>
+              <groupId>${group_id}</groupId>
+              <artifactId>${artifact_id}</artifactId>
+              <version>${version}</version>
+              <packaging>jar</packaging>
+          </project>
+          EOF
+
+            echo "Added ${group_id}:${artifact_id}:${version} to repository."
+          }
+
+          add_maven_artifact "xyz.krypton.spigot" "pulse-spigot-api" "1.8.8-R0.1" "provided/pulse-spigot-api-1.8.8-R0.1.jar"
+          add_maven_artifact "com.boydti.fawe" "FastAsyncWorldEdit" "6.1.9-caf0ad9" "provided/FastAsyncWorldEdit-1.8.8.jar"
+          add_maven_artifact "org.bukkit" "craftbukkit" "1.7.10-R0.1" "provided/craftbukkit-1.7.10-R0.1.jar"
+          add_maven_artifact "org.bukkit" "craftbukkit" "1.8.8" "provided/CraftBukkit-1.8.8.jar"
+          add_maven_artifact "com.sk89q.worldedit" "worldedit-bukkit" "6.1.7;dd00bb1" "provided/WorldEdit-1.8.8.jar"
+          add_maven_artifact "me.zowpy.core" "api" "1.0" "provided/volcano-api-1.0.jar"
+          add_maven_artifact "me.activated.core" "AquaCoreAPI" "2.2.7" "provided/aqua-core-api-1.0.jar"
+          add_maven_artifact "com.boydti.fawe" "FastAsyncWorldEdit" "21.03.26-b67f782-1287-22.3.10" "provided/FastAsyncWorldEdit-1.8.8-21.03.26.jar"
+          add_maven_artifact "rip.kuda" "HeatherAPI" "1.0" "provided/HeatherAPI-1.0-SNAPSHOT.jar"
+          add_maven_artifact "rip.kuda" "HeatherAPI" "1.0.1" "provided/HeatherAPI-1.0.1.jar"
+          add_maven_artifact "rip.kuda.heather" "HeatherAPI" "1.0.2" "provided/HeatherAPI-1.0.2.jar"
+          add_maven_artifact "LibsDisguises" "LibsDisguises" "8.6.9" "provided/LibsDisguises.jar"
+          add_maven_artifact "protocolsupport" "ProtocolSupport" "4.23" "provided/ProtocolSupport-1.8.jar"
+          add_maven_artifact "lol.roselia" "TulipSpigotAPI" "1.0" "provided/tulip-api-1.8.8-R0.1.jar"
+
+          echo "Repository was updated successfully."
+
+      - name: Verify generated files are committed
+        shell: bash
+        run: |
+          status="$(git status --porcelain)"
+          if [[ -n "$status" ]]; then
+            echo "Generated repository differs from committed files:"
+            echo "$status"
+            git diff --stat
+            exit 1
+          fi

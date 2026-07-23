@@ -121,4 +121,10 @@ Add-MavenArtifact `
     -Version "4.23" `
     -JarFile ".\provided\ProtocolSupport-1.8.jar"
 
+Add-MavenArtifact `
+    -GroupId "lol.roselia" `
+    -ArtifactId "TulipSpigot" `
+    -Version "1.0" `
+    -JarFile ".\provided\tulip-api.jar"
+
 Write-Host "Repository was updated successfully."
