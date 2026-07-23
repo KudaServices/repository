@@ -123,7 +123,7 @@ Add-MavenArtifact `
 
 Add-MavenArtifact `
     -GroupId "lol.roselia" `
-    -ArtifactId "TulipSpigot" `
+    -ArtifactId "api" `
     -Version "1.0" `
     -JarFile ".\provided\tulip-api.jar"
 
